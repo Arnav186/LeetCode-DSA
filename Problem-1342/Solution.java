@@ -1,5 +1,5 @@
 class Solution {
-    public int numberOfSteps(int num) {
+    public int numberOfSteps(int num)  {
         return helper(num,0);
     }
     static int helper(int num, int steps){
