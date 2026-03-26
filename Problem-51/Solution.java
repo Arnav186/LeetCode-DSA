@@ -1,0 +1,42 @@
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> res = new ArrayList<>();
+
+        boolean[] cols = new boolean[n];
+        boolean[] diag1 = new boolean[2 * n];
+        boolean[] diag2 = new boolean[2 * n];
+
+        char[][] board = new char[n][n];
+        for (char[] row : board) Arrays.fill(row, '.');
+
+        backtrack(0, n, board, res, cols, diag1, diag2);
+        return res;
+    }
+
+    private void backtrack(int row, int n, char[][] board, List<List<String>> res, boolean[] cols, boolean[] diag1, boolean[] diag2) {
+
+        if (row == n) {
+            List<String> temp = new ArrayList<>();
+            for (char[] r : board) temp.add(new String(r));
+            res.add(temp);
+            return;
+        }
+
+        for (int col = 0; col < n; col++) {
+            int d1 = row - col + n;  
+            int d2 = row + col;
+
+            if (cols[col] || diag1[d1] || diag2[d2]){
+                continue;
+            }
+
+            board[row][col] = 'Q';
+            cols[col] = diag1[d1] = diag2[d2] = true;
+
+            backtrack(row + 1, n, board, res, cols, diag1, diag2);
+
+            board[row][col] = '.';
+            cols[col] = diag1[d1] = diag2[d2] = false;
+        }
+    }
+}
